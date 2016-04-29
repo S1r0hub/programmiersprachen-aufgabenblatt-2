@@ -24,25 +24,4 @@ Vec2 operator*(Vec2 const& v, float s);
 Vec2 operator/(Vec2 const& v, float s);
 Vec2 operator*(float s, Vec2 const& v);
 
-/*
-Zu 2.2:
-
-Destruktor ist eine Funktion,
-welche aufgerufen wird, sobald das Objekt,
-welches auf dieser Klasse erstellt wurde, zertört/gelöscht wird!
-Wenn man die Funktion manuell erstellen will,
-muss man lediglich das Zeichen "~" vor den Klassennamen schreiben.
-(Zum Beispiel: ~vec2();)
-
-Die Klasse vec2 benötigt keinen Destruktor,
-da dieser, wenn nicht von Benutzer angelegt,
-durch den Compiler automatisch angelegt wird.
-
-Desweiteren benötigt man nur einen Destruktor,
-wenn man zum Beispiel beim Löschen des Objektes
-eine Aktion ausführen will.
-(Beispiel: std::cout << "Wurde gelöscht" << std::endl;)
-
-*/
-
 #endif

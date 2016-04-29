@@ -3,21 +3,6 @@
 #include "mat2.hpp"
 #include <catch.hpp>
 
-// AUFGABE 2.2
-/*
-	INCLUDE GUARDS
-
-Verhindern die Mehrfacheinbindung von Header-Dateien.
-Fehler tritt auf, wenn in einerm Programm eine
-Header-Datei mehrfach eingebunden wird.
-
-Loesung des Problems mit sog. Praeprozessor-Makros!
-(#ifndef... #define... #endif)
--> dadurch definiert und wird nicht erneut geladen.
-*/
-
-#include <iostream>
-using namespace std;
 
 TEST_CASE("teste vec2 Memberfunktionen", "[vec2Member]")
 {
@@ -445,16 +430,16 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 	SECTION("Rotationsmatrix-Test")
 	{
 		Mat2 m = make_rotation_mat2(0.087266); // = 5 Grad * (PI/180)
-		REQUIRE(m.matrix[0][0] == Approx(0.996195f));
-		REQUIRE(m.matrix[0][1] == Approx(-0.087156f));
-		REQUIRE(m.matrix[1][0] == Approx(0.087156f));
-		REQUIRE(m.matrix[1][1] == Approx(0.996195f));
+		REQUIRE(m.matrix[0][0] == Approx(0.996195));
+		REQUIRE(m.matrix[0][1] == Approx(-0.087156));
+		REQUIRE(m.matrix[1][0] == Approx(0.087156));
+		REQUIRE(m.matrix[1][1] == Approx(0.996195));
 
-		m = make_rotation_mat2(1.5708); // = PI/2 = 90 Grad * (PI/180)
-		REQUIRE(m.matrix[0][0] == Approx(0.999624f));
-		REQUIRE(m.matrix[0][1] == Approx(-0.027412f));
-		REQUIRE(m.matrix[1][0] == Approx(0.027412f));
-		REQUIRE(m.matrix[1][1] == Approx(0.999624f));
+		Mat2 m2 = make_rotation_mat2(1.5708); // = PI/2 = 90 Grad * (PI/180)
+		REQUIRE(m2.matrix[0][0] == Approx(0));
+		REQUIRE(m2.matrix[0][1] == Approx(-1));
+		REQUIRE(m2.matrix[1][0] == Approx(1));
+		REQUIRE(m2.matrix[1][1] == Approx(0));
 	}
 }
 
