@@ -26,8 +26,15 @@ Mat2& Mat2::operator*=(Mat2 const& m)
 
 	matrix[0][0] = temp.matrix[0][0] * m.matrix[0][0] + temp.matrix[0][1] * m.matrix[1][0];
 	matrix[0][1] = temp.matrix[0][0] * m.matrix[0][1] + temp.matrix[0][1] * m.matrix[1][1];
-	matrix[1][0] = temp.matrix[1][0] * m.matrix[0][0] + temp.matrix[1][1] * m.matrix[0][1];
+	matrix[1][0] = temp.matrix[1][0] * m.matrix[0][0] + temp.matrix[1][1] * m.matrix[1][0];
 	matrix[1][1] = temp.matrix[1][0] * m.matrix[0][1] + temp.matrix[1][1] * m.matrix[1][1];
 
 	return *this;
+}
+
+Mat2 operator*(Mat2 const& m1, Mat2 const& m2)
+{
+	Mat2 newM = m1;	// neue Matrix
+	newM *= m2;
+	return newM;
 }

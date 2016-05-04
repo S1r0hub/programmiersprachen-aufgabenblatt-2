@@ -257,20 +257,54 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(m.matrix[1][1] == 19);
 	}
 
-	SECTION("Matrix-Multiplikation-Test")
+	SECTION("Matrix-Multiplikation-Gleich-Test")
 	{
 		Mat2 m{5,10,15,20};
 		m *= Mat2{1,2,3,4};
 
-		cout << m.matrix[0][0] << endl;
-		cout << m.matrix[0][1] << endl;
-		cout << m.matrix[1][0] << endl;
-		cout << m.matrix[1][1] << endl;
+		REQUIRE(m.matrix[0][0] == 35);
+		REQUIRE(m.matrix[0][1] == 50);
+		REQUIRE(m.matrix[1][0] == 75);
+		REQUIRE(m.matrix[1][1] == 110);
+	
+		m = Mat2{5,2,10,4};
+		m *= Mat2{2,5,5,2};
 
-		//REQUIRE(m.matrix[0][0] == 35);
-		//REQUIRE(m.matrix[0][1] == 50);
-		//REQUIRE(m.matrix[1][0] == 75);
-		//REQUIRE(m.matrix[1][1] == 110);
+		REQUIRE(m.matrix[0][0] == 20);
+		REQUIRE(m.matrix[0][1] == 29);
+		REQUIRE(m.matrix[1][0] == 40);
+		REQUIRE(m.matrix[1][1] == 58);
+
+		// negative Zahlen
+
+		m = Mat2{-5,5,10,-10};
+		m *= Mat2{2,-2,-2,2};
+
+		REQUIRE(m.matrix[0][0] == -20);
+		REQUIRE(m.matrix[0][1] == 20);
+		REQUIRE(m.matrix[1][0] == 40);
+		REQUIRE(m.matrix[1][1] == -40);
+	}
+
+	SECTION("Matrix-Multiplikation-Test")
+	{
+		Mat2 m1{6,5,4,2};
+		Mat2 m2{2,5,1,3};
+		Mat2 mRes = m1 * m2;
+
+		REQUIRE(mRes.matrix[0][0] == 17);
+		REQUIRE(mRes.matrix[0][1] == 45);
+		REQUIRE(mRes.matrix[1][0] == 10);
+		REQUIRE(mRes.matrix[1][1] == 26);
+
+		m1 = Mat2{0,1,-1,2};
+		m2 = Mat2{1,-2,0,5};
+		mRes = m1 * m2;
+
+		REQUIRE(mRes.matrix[0][0] == 0);
+		REQUIRE(mRes.matrix[0][1] == 5);
+		REQUIRE(mRes.matrix[1][0] == -1);
+		REQUIRE(mRes.matrix[1][1] == 12);		
 	}
 }
 
