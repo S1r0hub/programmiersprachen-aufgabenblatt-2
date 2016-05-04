@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include <catch.hpp>
 #include "vec2.hpp"
+#include "mat2.hpp"
 
 // AUFGABE 2.2
 /*
@@ -227,6 +228,49 @@ TEST_CASE("teste vec2 freie Funktionen", "[vec2Free]")
 
 		REQUIRE(vRes.x == vErg2.x);
 		REQUIRE(vRes.y == vErg2.y);
+	}
+}
+
+TEST_CASE("2x2 Matrixtest","[mat2]")
+{
+	SECTION("Default-Konstruktor-Test")
+	{
+		Mat2 m;
+		REQUIRE(m.matrix[0][0] == 1);
+		REQUIRE(m.matrix[0][1] == 0);
+		REQUIRE(m.matrix[1][0] == 0);
+		REQUIRE(m.matrix[1][1] == 1);
+	}
+
+	SECTION("User-Konstruktor-Test")
+	{
+		Mat2 m{1,2,3,4};
+		REQUIRE(m.matrix[0][0] == 1);
+		REQUIRE(m.matrix[0][1] == 2);
+		REQUIRE(m.matrix[1][0] == 3);
+		REQUIRE(m.matrix[1][1] == 4);
+
+		m = Mat2{10,13,15,19};
+		REQUIRE(m.matrix[0][0] == 10);
+		REQUIRE(m.matrix[0][1] == 13);
+		REQUIRE(m.matrix[1][0] == 15);
+		REQUIRE(m.matrix[1][1] == 19);
+	}
+
+	SECTION("Matrix-Multiplikation-Test")
+	{
+		Mat2 m{5,10,15,20};
+		m *= Mat2{1,2,3,4};
+
+		cout << m.matrix[0][0] << endl;
+		cout << m.matrix[0][1] << endl;
+		cout << m.matrix[1][0] << endl;
+		cout << m.matrix[1][1] << endl;
+
+		//REQUIRE(m.matrix[0][0] == 35);
+		//REQUIRE(m.matrix[0][1] == 50);
+		//REQUIRE(m.matrix[1][0] == 75);
+		//REQUIRE(m.matrix[1][1] == 110);
 	}
 }
 
