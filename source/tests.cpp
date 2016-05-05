@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
 #include "vec2.hpp"
 #include "mat2.hpp"
+#include <catch.hpp>
 
 // AUFGABE 2.2
 /*
@@ -250,14 +250,16 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(m.matrix[1][0] == 3);
 		REQUIRE(m.matrix[1][1] == 4);
 
-		m = Mat2{10,13,15,19};
-		REQUIRE(m.matrix[0][0] == 10);
+		// negative Zahlen
+
+		m = Mat2{-10,13,-15,19};
+		REQUIRE(m.matrix[0][0] == -10);
 		REQUIRE(m.matrix[0][1] == 13);
-		REQUIRE(m.matrix[1][0] == 15);
+		REQUIRE(m.matrix[1][0] == -15);
 		REQUIRE(m.matrix[1][1] == 19);
 	}
 
-	SECTION("Matrix-Multiplikation-Gleich-Test")
+	SECTION("Multiplikation-Gleich-Test")
 	{
 		Mat2 m{5,10,15,20};
 		m *= Mat2{1,2,3,4};
@@ -286,7 +288,7 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(m.matrix[1][1] == -40);
 	}
 
-	SECTION("Matrix-Multiplikation-Test")
+	SECTION("Multiplikation-Test")
 	{
 		Mat2 m1{6,5,4,2};
 		Mat2 m2{2,5,1,3};
@@ -297,6 +299,8 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(mRes.matrix[1][0] == 10);
 		REQUIRE(mRes.matrix[1][1] == 26);
 
+		// negative Zahlen
+
 		m1 = Mat2{0,1,-1,2};
 		m2 = Mat2{1,-2,0,5};
 		mRes = m1 * m2;
@@ -305,6 +309,73 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(mRes.matrix[0][1] == 5);
 		REQUIRE(mRes.matrix[1][0] == -1);
 		REQUIRE(mRes.matrix[1][1] == 12);		
+	}
+
+	SECTION("Matrix *= Vektor-Test")	
+	{
+		Mat2 m = Mat2{5,5,2,1};
+		Vec2 vRes = (m * Vec2{4,1});
+
+		REQUIRE(vRes.x == 25);
+		REQUIRE(vRes.y == 9);
+
+		// negative Zahlen
+
+		m = Mat2{5,5,2,-1};
+		vRes = (m * Vec2{-4,1});
+
+		REQUIRE(vRes.x == -15);
+		REQUIRE(vRes.y == -9);
+	}
+
+	SECTION("Matrix * Vektor-Test")
+	{
+		Mat2 m = Mat2{5,10,2,5};
+		Vec2 vRes = (m * Vec2{1,1});
+
+		REQUIRE(vRes.x == 15);
+		REQUIRE(vRes.y == 7);
+
+		m = Mat2{1.5,0.5,1.5,2.5};
+		vRes = (m * Vec2{1,1});
+
+		REQUIRE(vRes.x == 2);
+		REQUIRE(vRes.y == 4);
+
+		// negative Zahlen
+
+		m = Mat2{-2,1,0,5};
+		vRes = (m * Vec2{1,-2});
+
+		REQUIRE(vRes.x == -4);
+		REQUIRE(vRes.y == -10);
+	}
+
+	SECTION("Determinante-Test")
+	{
+		Mat2 m{5,2,2,4};
+		REQUIRE(Mat2Det(m) == 16);
+
+		m = Mat2{3,5,2,1};
+		REQUIRE(Mat2Det(m) == -7);
+
+		// negative Zahlen
+
+		m = Mat2{-1,5,-3,2};
+		REQUIRE(Mat2Det(m) == 13);
+
+		m = Mat2{0,-0.5,-1,3};
+		REQUIRE(Mat2Det(m) == Approx(-0.5));
+	}
+
+	SECTION("Inverse-Test")	// TODO: FEHLERHAFT
+	{
+		Mat2 m{5,4,3,2};
+		Mat2 inv = Mat2Inv(m);
+		REQUIRE(inv.matrix[0][0] == -1);
+		REQUIRE(inv.matrix[0][1] == 2);
+		REQUIRE(inv.matrix[1][0] == Approx(3/2));
+		REQUIRE(inv.matrix[1][1] == Approx(-5/2));
 	}
 }
 
