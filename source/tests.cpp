@@ -374,8 +374,24 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		Mat2 inv = Mat2Inv(m);
 		REQUIRE(inv.matrix[0][0] == -1);
 		REQUIRE(inv.matrix[0][1] == 2);
-		REQUIRE(inv.matrix[1][0] == Approx(3/2));
-		REQUIRE(inv.matrix[1][1] == Approx(-5/2));
+		REQUIRE(inv.matrix[1][0] == 1.5);
+		REQUIRE(inv.matrix[1][1] == -2.5);
+
+		m = Mat2{8,4,2,0};
+		inv = Mat2Inv(m);
+		REQUIRE(inv.matrix[0][0] == 0);
+		REQUIRE(inv.matrix[0][1] == 0.5);
+		REQUIRE(inv.matrix[1][0] == 0.25);
+		REQUIRE(inv.matrix[1][1] == -1);
+
+		// negative Zahlen
+
+		m = Mat2{-2,4,0,6};
+		inv = Mat2Inv(m);
+		REQUIRE(inv.matrix[0][0] == -0.5);
+		REQUIRE(inv.matrix[0][1] == Approx(0.333333));
+		REQUIRE(inv.matrix[1][0] == 0);
+		REQUIRE(inv.matrix[1][1] == Approx(0.166666));
 	}
 }
 

@@ -59,6 +59,16 @@ float Mat2Det(Mat2 &m)
 	return (m.matrix[0][0] * m.matrix[1][1] - m.matrix[0][1] * m.matrix[1][0]);
 }
 
+Mat2& Mat2::operator*=(float k)
+{
+	for (int i = 0; i < 2; ++i) {
+		for (int l = 0; l < 2; ++l) {
+			matrix[i][l] *= k; 
+		}
+	}
+	return *this;
+}
+
 Mat2 Mat2Inv(Mat2 &m)
 {
 	Mat2 TM{0,m.matrix[0][1],m.matrix[1][0],0};
@@ -66,6 +76,7 @@ Mat2 Mat2Inv(Mat2 &m)
 	TM.matrix[0][1] *= -1;
 	TM.matrix[1][0] *= -1;
 	TM.matrix[1][1] = m.matrix[0][0];	// switche a an Position von d
-	float mult = ( 1 / (m.matrix[0][0] * m.matrix[1][1] - m.matrix[0][1] * m.matrix[1][0]) );
-	return ( mult * TM );
+	float detA = Mat2Det(m);
+	if (detA) { return ( TM *= (1 / (detA)) ); }
+	return ( TM *= 0 );
 }

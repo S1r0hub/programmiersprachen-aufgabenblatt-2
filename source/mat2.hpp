@@ -14,6 +14,7 @@ class Mat2
 		
 		Mat2& operator*=(Mat2 const& m);
 		Vec2 operator*=(Vec2 const& v);
+		Mat2& operator*=(float k);
 
 		float matrix[2][2];
 };
