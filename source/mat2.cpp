@@ -20,6 +20,21 @@ Mat2::Mat2(float x1, float x2 = 0, float y1 = 0, float y2 = 0)
 	this->matrix[1][1] = y2;
 }
 
+bool Mat2::equal(Mat2 const& m)
+{
+	bool same = true;
+	for (int i = 0; i < 2; ++i) {
+		for (int k = 0; k < 2; ++k) {
+			if (matrix[i][k] != m.matrix[i][k]) {
+				same = false;
+				break;
+			}
+		}
+	}
+
+	return same;
+}
+
 Mat2& Mat2::operator*=(Mat2 const& m)
 {
 	Mat2 temp = *this;
@@ -53,10 +68,8 @@ Vec2 operator*(Mat2 &m, Vec2 const& v)
 	return newV;
 }
 
-float Mat2Det(Mat2 &m)
-{
-	// Determinante berechnen
-	return (m.matrix[0][0] * m.matrix[1][1] - m.matrix[0][1] * m.matrix[1][0]);
+float Mat2::Det() {
+	return (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
 }
 
 Mat2& Mat2::operator*=(float k)
@@ -69,14 +82,19 @@ Mat2& Mat2::operator*=(float k)
 	return *this;
 }
 
-Mat2 Mat2Inv(Mat2 &m)
+Mat2 Mat2::Inv()
 {
-	Mat2 TM{0,m.matrix[0][1],m.matrix[1][0],0};
-	TM.matrix[0][0] = m.matrix[1][1];	// switche d an Position von a
+	Mat2 TM{0,matrix[0][1],matrix[1][0],0};
+	TM.matrix[0][0] = matrix[1][1];	// switche d an Position von a
 	TM.matrix[0][1] *= -1;
 	TM.matrix[1][0] *= -1;
-	TM.matrix[1][1] = m.matrix[0][0];	// switche a an Position von d
-	float detA = Mat2Det(m);
+	TM.matrix[1][1] = matrix[0][0];	// switche a an Position von d
+	float detA = Det();
 	if (detA) { return ( TM *= (1 / (detA)) ); }
 	return ( TM *= 0 );
+}
+
+Mat2 Mat2::Trans() {
+	Mat2 m{matrix[0][0],matrix[1][0],matrix[0][1],matrix[1][1]};
+	return m;
 }

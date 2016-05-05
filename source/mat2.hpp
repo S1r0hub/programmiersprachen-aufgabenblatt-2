@@ -16,12 +16,15 @@ class Mat2
 		Vec2 operator*=(Vec2 const& v);
 		Mat2& operator*=(float k);
 
+		bool equal(Mat2 const& m);	// ist dieser Vektor gleich einem anderen?
+		float Det();	// Determinante
+		Mat2 Inv();		// Inverse Matrix
+		Mat2 Trans(); 	// Transponierte Matrix
+
 		float matrix[2][2];
 };
 
 Mat2 operator*(Mat2 const& m1, Mat2 const& m2);
 Vec2 operator*(Mat2 &m, Vec2 const& v);
-float Mat2Det(Mat2 &m);
-Mat2 Mat2Inv(Mat2 &m);
 
 #endif

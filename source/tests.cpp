@@ -233,6 +233,33 @@ TEST_CASE("teste vec2 freie Funktionen", "[vec2Free]")
 
 TEST_CASE("2x2 Matrixtest","[mat2]")
 {
+	SECTION("Matrix-Vergleich-Test")
+	{
+		Mat2 m{0,1,2,3};
+		Mat2 m2{0,1,2,3};
+		REQUIRE(m.equal(m2) == true);
+
+		m = Mat2{-5,5,-4,2.5};
+		m2 = Mat2{-5,5,-4,2.5};
+		REQUIRE(m.equal(m2) == true);
+
+		m = Mat2{0,1,-2,3};
+		m2 = Mat2{0.001,1,-2,3};
+		REQUIRE(m.equal(m2) == false);
+
+		m = Mat2{0,1,-2,3};
+		m2 = Mat2{0,2,-2,3};
+		REQUIRE(m.equal(m2) == false);
+
+		m = Mat2{0,1,-2,3};
+		m2 = Mat2{0,1,0,3};
+		REQUIRE(m.equal(m2) == false);
+
+		m = Mat2{0,1,-2,3};
+		m2 = Mat2{0,1,-2,3.1};
+		REQUIRE(m.equal(m2) == false);
+	}
+
 	SECTION("Default-Konstruktor-Test")
 	{
 		Mat2 m;
@@ -262,53 +289,43 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 	SECTION("Multiplikation-Gleich-Test")
 	{
 		Mat2 m{5,10,15,20};
+		Mat2 correctResult{35,50,75,110};
 		m *= Mat2{1,2,3,4};
 
-		REQUIRE(m.matrix[0][0] == 35);
-		REQUIRE(m.matrix[0][1] == 50);
-		REQUIRE(m.matrix[1][0] == 75);
-		REQUIRE(m.matrix[1][1] == 110);
+		REQUIRE(m.equal(correctResult) == true);
 	
 		m = Mat2{5,2,10,4};
+		correctResult = Mat2{20,29,40,58};
 		m *= Mat2{2,5,5,2};
 
-		REQUIRE(m.matrix[0][0] == 20);
-		REQUIRE(m.matrix[0][1] == 29);
-		REQUIRE(m.matrix[1][0] == 40);
-		REQUIRE(m.matrix[1][1] == 58);
+		REQUIRE(m.equal(correctResult) == true);
 
 		// negative Zahlen
 
 		m = Mat2{-5,5,10,-10};
+		correctResult = Mat2{-20,20,40,-40};
 		m *= Mat2{2,-2,-2,2};
 
-		REQUIRE(m.matrix[0][0] == -20);
-		REQUIRE(m.matrix[0][1] == 20);
-		REQUIRE(m.matrix[1][0] == 40);
-		REQUIRE(m.matrix[1][1] == -40);
+		REQUIRE(m.equal(correctResult) == true);
 	}
 
 	SECTION("Multiplikation-Test")
 	{
 		Mat2 m1{6,5,4,2};
 		Mat2 m2{2,5,1,3};
+		Mat2 correctResult{17,45,10,26};
 		Mat2 mRes = m1 * m2;
 
-		REQUIRE(mRes.matrix[0][0] == 17);
-		REQUIRE(mRes.matrix[0][1] == 45);
-		REQUIRE(mRes.matrix[1][0] == 10);
-		REQUIRE(mRes.matrix[1][1] == 26);
+		REQUIRE(mRes.equal(correctResult) == true);
 
 		// negative Zahlen
 
 		m1 = Mat2{0,1,-1,2};
 		m2 = Mat2{1,-2,0,5};
+		correctResult = Mat2{0,5,-1,12};
 		mRes = m1 * m2;
 
-		REQUIRE(mRes.matrix[0][0] == 0);
-		REQUIRE(mRes.matrix[0][1] == 5);
-		REQUIRE(mRes.matrix[1][0] == -1);
-		REQUIRE(mRes.matrix[1][1] == 12);		
+		REQUIRE(mRes.equal(correctResult));	
 	}
 
 	SECTION("Matrix *= Vektor-Test")	
@@ -354,44 +371,55 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 	SECTION("Determinante-Test")
 	{
 		Mat2 m{5,2,2,4};
-		REQUIRE(Mat2Det(m) == 16);
+		REQUIRE(m.Det() == 16);
 
 		m = Mat2{3,5,2,1};
-		REQUIRE(Mat2Det(m) == -7);
+		REQUIRE(m.Det() == -7);
 
 		// negative Zahlen
 
 		m = Mat2{-1,5,-3,2};
-		REQUIRE(Mat2Det(m) == 13);
+		REQUIRE(m.Det() == 13);
 
 		m = Mat2{0,-0.5,-1,3};
-		REQUIRE(Mat2Det(m) == Approx(-0.5));
+		REQUIRE(m.Det() == Approx(-0.5));
 	}
 
 	SECTION("Inverse-Test")	// TODO: FEHLERHAFT
 	{
 		Mat2 m{5,4,3,2};
-		Mat2 inv = Mat2Inv(m);
-		REQUIRE(inv.matrix[0][0] == -1);
-		REQUIRE(inv.matrix[0][1] == 2);
-		REQUIRE(inv.matrix[1][0] == 1.5);
-		REQUIRE(inv.matrix[1][1] == -2.5);
+		Mat2 inv = m.Inv();
+		Mat2 correctResult{-1,2,1.5,-2.5};
+		REQUIRE(inv.equal(correctResult) == true);
 
 		m = Mat2{8,4,2,0};
-		inv = Mat2Inv(m);
-		REQUIRE(inv.matrix[0][0] == 0);
-		REQUIRE(inv.matrix[0][1] == 0.5);
-		REQUIRE(inv.matrix[1][0] == 0.25);
-		REQUIRE(inv.matrix[1][1] == -1);
+		inv = m.Inv();
+		correctResult = Mat2{0,0.5,0.25,-1};
+		REQUIRE(inv.equal(correctResult) == true);
 
 		// negative Zahlen
 
 		m = Mat2{-2,4,0,6};
-		inv = Mat2Inv(m);
+		inv = m.Inv();
 		REQUIRE(inv.matrix[0][0] == -0.5);
 		REQUIRE(inv.matrix[0][1] == Approx(0.333333));
 		REQUIRE(inv.matrix[1][0] == 0);
 		REQUIRE(inv.matrix[1][1] == Approx(0.166666));
+	}
+
+	SECTION("Transponierte-Test")
+	{
+		Mat2 m{0,5,2,1};
+		Mat2 correctResult{0,2,5,1};
+		REQUIRE(m.Trans().equal(correctResult) == true);
+
+		m = Mat2{5,-8,7,-6};
+		correctResult = Mat2{5,7,-8,-6};
+		REQUIRE(m.Trans().equal(correctResult) == true);
+
+		m = Mat2{-4.7,3.8,5,12};
+		correctResult = Mat2{-4.7,5,3.8,12};
+		REQUIRE(m.Trans().equal(correctResult) == true);
 	}
 }
 
