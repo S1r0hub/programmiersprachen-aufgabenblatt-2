@@ -368,39 +368,59 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(vRes.y == -10);
 	}
 
+	SECTION("Vektor * Matrix-Test")
+	{
+		Mat2 m = Mat2{5,10,2,5};
+		Vec2 vRes = (Vec2{1,1} * m);
+
+		REQUIRE(vRes.x == 15);
+		REQUIRE(vRes.y == 7);
+
+		m = Mat2{1.5,0.5,1.5,2.5};
+		vRes = (Vec2{1,1} * m);
+
+		REQUIRE(vRes.x == 2);
+		REQUIRE(vRes.y == 4);
+
+		// negative Zahlen
+
+		m = Mat2{-2,1,0,5};
+		vRes = (Vec2{1,-2} * m);
+
+		REQUIRE(vRes.x == -4);
+		REQUIRE(vRes.y == -10);
+	}
+
 	SECTION("Determinante-Test")
 	{
 		Mat2 m{5,2,2,4};
-		REQUIRE(m.Det() == 16);
+		REQUIRE(m.det() == 16);
 
 		m = Mat2{3,5,2,1};
-		REQUIRE(m.Det() == -7);
+		REQUIRE(m.det() == -7);
 
 		// negative Zahlen
 
 		m = Mat2{-1,5,-3,2};
-		REQUIRE(m.Det() == 13);
+		REQUIRE(m.det() == 13);
 
 		m = Mat2{0,-0.5,-1,3};
-		REQUIRE(m.Det() == Approx(-0.5));
+		REQUIRE(m.det() == Approx(-0.5));
 	}
 
 	SECTION("Inverse-Test")	// TODO: FEHLERHAFT
 	{
-		Mat2 m{5,4,3,2};
-		Mat2 inv = m.Inv();
+		Mat2 inv = inverse(Mat2{5,4,3,2});
 		Mat2 correctResult{-1,2,1.5,-2.5};
 		REQUIRE(inv.equal(correctResult) == true);
 
-		m = Mat2{8,4,2,0};
-		inv = m.Inv();
+		inv = inverse(Mat2{8,4,2,0});
 		correctResult = Mat2{0,0.5,0.25,-1};
 		REQUIRE(inv.equal(correctResult) == true);
 
 		// negative Zahlen
 
-		m = Mat2{-2,4,0,6};
-		inv = m.Inv();
+		inv = inverse(Mat2{-2,4,0,6});
 		REQUIRE(inv.matrix[0][0] == -0.5);
 		REQUIRE(inv.matrix[0][1] == Approx(0.333333));
 		REQUIRE(inv.matrix[1][0] == 0);
@@ -409,17 +429,32 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 
 	SECTION("Transponierte-Test")
 	{
-		Mat2 m{0,5,2,1};
+		Mat2 m = transpose(Mat2{0,5,2,1});
 		Mat2 correctResult{0,2,5,1};
-		REQUIRE(m.Trans().equal(correctResult) == true);
+		REQUIRE(m.equal(correctResult) == true);
 
-		m = Mat2{5,-8,7,-6};
+		m = transpose(Mat2{5,-8,7,-6});
 		correctResult = Mat2{5,7,-8,-6};
-		REQUIRE(m.Trans().equal(correctResult) == true);
+		REQUIRE(m.equal(correctResult) == true);
 
-		m = Mat2{-4.7,3.8,5,12};
+		m = transpose(Mat2{-4.7,3.8,5,12});
 		correctResult = Mat2{-4.7,5,3.8,12};
-		REQUIRE(m.Trans().equal(correctResult) == true);
+		REQUIRE(m.equal(correctResult) == true);
+	}
+
+	SECTION("Rotationsmatrix-Test")
+	{
+		Mat2 m = make_rotation_mat2(0.087266); // = 5 Grad * (PI/180)
+		REQUIRE(m.matrix[0][0] == Approx(0.996195f));
+		REQUIRE(m.matrix[0][1] == Approx(-0.087156f));
+		REQUIRE(m.matrix[1][0] == Approx(0.087156f));
+		REQUIRE(m.matrix[1][1] == Approx(0.996195f));
+
+		m = make_rotation_mat2(1.5708); // = PI/2 = 90 Grad * (PI/180)
+		REQUIRE(m.matrix[0][0] == Approx(0.999624f));
+		REQUIRE(m.matrix[0][1] == Approx(-0.027412f));
+		REQUIRE(m.matrix[1][0] == Approx(0.027412f));
+		REQUIRE(m.matrix[1][1] == Approx(0.999624f));
 	}
 }
 
