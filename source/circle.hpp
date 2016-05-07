@@ -27,11 +27,11 @@ class Circle
 		Circle();
 		Circle(float xPos, float yPos, float defaultRadius);
 
-		float getRadius() const;		// Radius
-		float getDiameter() const;	// Durchmesser
-
 		Position const& getPos() const;
 		BoundingBox getBBox() const;
+		float getRadius() const;		// Radius
+		float getDiameter() const;		// Durchmesser
+		float circumference() const;	// Umfang
 
 		void setPos(float x, float y);
 		void setRadius(float radius_);

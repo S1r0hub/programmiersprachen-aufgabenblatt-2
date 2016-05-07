@@ -24,6 +24,7 @@ class Rectangle
 		float getHeight() const;
 		float getDiagonal() const;		// Diagonalenlaenge
 		float getCircumCircle() const;	// Umkreisradius
+		float circumference() const;	// Umfang
 
 		void setPos(float x, float y);
 		void setScale(float width_, float height_);

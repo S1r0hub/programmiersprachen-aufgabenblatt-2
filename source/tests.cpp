@@ -494,6 +494,15 @@ TEST_CASE("Circle-Test","[circle]")
 		circ.setRadius(-50.2);
 		REQUIRE(circ.getRadius() == Approx(50.2));
 	}
+
+	SECTION("circumference-Test")
+	{
+		Circle circ{0,0,2};
+		REQUIRE(circ.circumference() == Approx(12.5664));
+
+		circ = Circle{0,0,4.5};
+		REQUIRE(circ.circumference() == Approx(28.2743));
+	}
 }
 
 TEST_CASE("Rectangle-Test", "[rectangle]")
@@ -546,6 +555,15 @@ TEST_CASE("Rectangle-Test", "[rectangle]")
 		rect.setScale(-10,15.123);
 		REQUIRE(rect.getWidth() == 10);
 		REQUIRE(rect.getHeight() == Approx(15.123));
+	}
+
+	SECTION("circumference-Test")
+	{
+		Rectangle rect{0,0,5,5};
+		REQUIRE(rect.circumference() == 20);
+
+		rect = Rectangle{0,0,2.5,10};
+		REQUIRE(rect.circumference() == 25);
 	}
 }
 

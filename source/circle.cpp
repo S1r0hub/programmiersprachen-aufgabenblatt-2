@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "circle.hpp"
+#include <cmath>
 
 Circle::Circle() {
 	radius = 0.0;
@@ -7,12 +9,18 @@ Circle::Circle() {
 }
 
 Circle::Circle(float xPos, float yPos, float defaultRadius) {
-	radius = defaultRadius;
+	radius = (defaultRadius < 0 ? (defaultRadius * -1) : defaultRadius);
 	position = Position{xPos,yPos};
-	boundingBox = BoundingBox{xPos - defaultRadius, yPos - defaultRadius, 2*defaultRadius, 2*defaultRadius};
+	boundingBox = BoundingBox{xPos - radius, yPos - defaultRadius, 2*radius, 2*radius};
 }
 
 // Getter ---------->
+
+Position const& Circle::getPos() const {
+	return position; }
+
+BoundingBox Circle::getBBox() const {
+	return boundingBox; }
 
 float Circle::getRadius() const {
 	return radius; }
@@ -20,11 +28,9 @@ float Circle::getRadius() const {
 float Circle::getDiameter() const {
 	return 2*radius; }
 
-Position const& Circle::getPos() const {
-	return position; }
-
-BoundingBox Circle::getBBox() const {
-	return boundingBox; }
+float Circle::circumference() const {
+	return 2*M_PI*radius;
+}
 
 // Setter ---------->
 

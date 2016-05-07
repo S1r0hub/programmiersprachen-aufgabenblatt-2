@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "rectangle.hpp"
 #include <cmath>
 
@@ -9,8 +10,8 @@ Rectangle::Rectangle() {
 
 Rectangle::Rectangle(float xPos, float yPos, float width_, float height_) {
 	position = Position{xPos,yPos};
-	width = width_;
-	height = height_;
+	width = (width_ < 0 ? (width_ * -1) : width_);
+	height = (height_ < 0 ? (height_ * -1) : height_);
 }
 
 // Getter ---------->
@@ -38,6 +39,10 @@ float Rectangle::getDiagonal() const {
 float Rectangle::getCircumCircle() const {
 	float diagonal = getDiagonal();
 	return diagonal/2;
+}
+
+float Rectangle::circumference() const {
+	return (2*width + 2*height);
 }
 
 // Setter ---------->
