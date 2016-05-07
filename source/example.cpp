@@ -2,6 +2,10 @@
 #include <utility>
 #include <cmath>
 
+// Tests Aufgaben 2.11, 2.12
+#include "circle.hpp"
+#include "rectangle.hpp"
+
 int main(int argc, char* argv[])
 {
   Window win{std::make_pair(800,800)};
@@ -11,6 +15,7 @@ int main(int argc, char* argv[])
       win.close();
     }
 
+    /*
     auto t = win.get_time();
     float x1{0.5f + 0.5f * std::sin(t)};
     float y1{0.5f + 0.5f * std::cos(t)};
@@ -24,15 +29,26 @@ int main(int argc, char* argv[])
     win.draw_point(x1, y1, 1.0f, 0.0f, 0.0f);
     win.draw_point(x2, y2, 0.0f, 1.0f, 0.0f);
     win.draw_point(x3, y3, 0.0f, 0.0f, 1.0f);
+    */
 
     auto m = win.mouse_position();
-    win.draw_line(0.1f, 0.1f, 0.8f,0.1f, 1.0,0.0,0.0);
+    //win.draw_line(0.1f, 0.1f, 0.8f,0.1f, 1.0,0.0,0.0);
 
     win.draw_line(0.0f, m.second, 0.01f, m.second, 0.0, 0.0, 0.0);
     win.draw_line(0.99f, m.second,1.0f, m.second, 0.0, 0.0, 0.0);
 
     win.draw_line(m.first, 0.0f, m.first, 0.01f, 0.0, 0.0, 0.0);
     win.draw_line(m.first, 0.99f,m.first, 1.0f, 0.0, 0.0, 0.0);
+
+    // Tests Aufgaben 2.11, 2.12
+
+    // Kreis zeichnen
+    Circle circ{0.5,0.5,0.1};
+    circ.draw(win, false, true);
+
+    // Rechteck zeichnen
+    Rectangle rect{0.2,0.2,0.6,0.2};
+    rect.draw(win, false, true);
 
     win.update();
   }

@@ -3,6 +3,7 @@
 
 #include "position2.hpp"
 #include "color.hpp"
+#include "window.hpp"
 
 /* // standardmaessig durch position2.hpp integriert
 struct Position
@@ -30,6 +31,8 @@ class Rectangle
 
 		void setPos(float x, float y);
 		void setScale(float width_, float height_);
+
+		void draw(Window const& window, bool fill, bool outline) const;
 
 	private:
 		Position position;

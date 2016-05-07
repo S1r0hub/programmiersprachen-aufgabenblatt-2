@@ -3,6 +3,7 @@
 
 #include "position2.hpp"
 #include "color.hpp"
+#include "window.hpp"
 
 /* // standardmaessig durch position2.hpp integriert
 struct Position
@@ -37,6 +38,8 @@ class Circle
 
 		void setPos(float x, float y);
 		void setRadius(float radius_);
+
+		void draw(Window const& window, bool fill, bool outline) const;
 
 	private:
 		float radius;

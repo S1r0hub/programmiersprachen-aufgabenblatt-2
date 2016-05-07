@@ -65,3 +65,28 @@ void Rectangle::setScale(float width_, float height_) {
 	width = (width_ < 0 ? (width_ * -1) : width_);
 	height = (height_ < 0 ? (height_ * -1) : height_);
 }
+
+// Functional ---------->
+
+void Rectangle::draw(Window const& window, bool fill, bool outline) const
+{
+	if (fill) {
+		int lineCount = height*800;
+		for (int i = 0; i < lineCount; ++i) {
+			float y = ((float)i/(float)lineCount) * height;
+			window.draw_line(position.x,
+							 position.y + y,
+							 position.x + width,
+							 position.y + y,
+							 0.5f,0.5f,0.5f);
+		}
+	}
+
+	if (outline) {
+		Color c{0,0,0};
+		window.draw_line(position.x, position.y, position.x + width, position.y, c.r, c.g, c.b);
+		window.draw_line(position.x + width, position.y, position.x + width, position.y + height, c.r, c.g, c.b);
+		window.draw_line(position.x, position.y, position.x, position.y + height, c.r, c.g, c.b);
+		window.draw_line(position.x, position.y + height, position.x + width, position.y + height, c.r, c.g, c.b);
+	}
+}

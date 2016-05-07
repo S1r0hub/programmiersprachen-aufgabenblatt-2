@@ -2,6 +2,8 @@
 #include "circle.hpp"
 #include <cmath>
 
+#include <iostream>
+
 Circle::Circle() {
 	radius = 0.0;
 	position = Position{};
@@ -51,4 +53,35 @@ void Circle::setPos(float x, float y) {
 void Circle::setRadius(float radius_) {
 	radius = (radius_ < 0 ? (radius_ * -1) : radius_);
 	boundingBox = BoundingBox{position.x - radius, position.y - radius, 2*radius, 2*radius};
+}
+
+// Functional ---------->
+
+void Circle::draw(Window const& window, bool fill, bool outline) const
+{
+	if (fill) {
+		int lineCount = 400;
+		for (int i = 1; i <= lineCount; ++i) {
+			float a = 2*M_PI*((float)i/(float)lineCount);
+			window.draw_line(position.x,
+							 position.y,
+							 position.x + (float)(radius * cos(a)),
+							 position.y + (float)(radius * sin(a)),
+							 0.1f,0.1f,0.1f);
+		}
+	}
+
+	if (outline) {
+		Color c{0,0,0};
+		int segments = 30;
+		for (int i = 1; i <= segments; ++i) {
+			float a = 2*M_PI*((float)i/(float)segments);
+			float b = 2*M_PI*((float)(i+1)/(float)segments);
+			window.draw_line(position.x + (float)(radius * cos(a)),
+							 position.y + (float)(radius * sin(a)),
+							 position.x + (float)(radius * cos(b)),
+							 position.y + (float)(radius * sin(b)),
+							 c.r,c.g,c.b);
+		}
+	}
 }
