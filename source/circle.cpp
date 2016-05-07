@@ -4,14 +4,23 @@
 
 Circle::Circle() {
 	radius = 0.0;
-	position = Position{0,0};
-	boundingBox = BoundingBox{0,0,0,0};
+	position = Position{};
+	boundingBox = BoundingBox{};
+	color = Color{};
 }
 
 Circle::Circle(float xPos, float yPos, float defaultRadius) {
 	radius = (defaultRadius < 0 ? (defaultRadius * -1) : defaultRadius);
 	position = Position{xPos,yPos};
 	boundingBox = BoundingBox{xPos - radius, yPos - defaultRadius, 2*radius, 2*radius};
+	color = Color{};
+}
+
+Circle::Circle(float xPos, float yPos, float defaultRadius, Color const& color_) {
+	radius = (defaultRadius < 0 ? (defaultRadius * -1) : defaultRadius);
+	position = Position{xPos,yPos};
+	boundingBox = BoundingBox{xPos - radius, yPos - defaultRadius, 2*radius, 2*radius};
+	color = color_;
 }
 
 // Getter ---------->

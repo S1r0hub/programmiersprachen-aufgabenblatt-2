@@ -2,6 +2,7 @@
 #define CIRCLE_HPP
 
 #include "position2.hpp"
+#include "color.hpp"
 
 /* // standardmaessig durch position2.hpp integriert
 struct Position
@@ -26,6 +27,7 @@ class Circle
 	public:
 		Circle();
 		Circle(float xPos, float yPos, float defaultRadius);
+		Circle(float xPos, float yPos, float defaultRadius, Color const& color_);
 
 		Position const& getPos() const;
 		BoundingBox getBBox() const;
@@ -40,6 +42,7 @@ class Circle
 		float radius;
 		Position position;
 		BoundingBox boundingBox;
+		Color color;
 };
 
 #endif

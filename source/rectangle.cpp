@@ -3,15 +3,24 @@
 #include <cmath>
 
 Rectangle::Rectangle() {
-	position = Position{0,0};
+	position = Position{};
 	width = 0;
 	height = 0;
+	color = Color{};
 }
 
 Rectangle::Rectangle(float xPos, float yPos, float width_, float height_) {
 	position = Position{xPos,yPos};
 	width = (width_ < 0 ? (width_ * -1) : width_);
 	height = (height_ < 0 ? (height_ * -1) : height_);
+	color = Color{};
+}
+
+Rectangle::Rectangle(float xPos, float yPos, float width_, float height_, Color const& color_) {
+	position = Position{xPos,yPos};
+	width = (width_ < 0 ? (width_ * -1) : width_);
+	height = (height_ < 0 ? (height_ * -1) : height_);
+	color = color_;
 }
 
 // Getter ---------->

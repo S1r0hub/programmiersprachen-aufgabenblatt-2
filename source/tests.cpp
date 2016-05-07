@@ -3,6 +3,7 @@
 #include "mat2.hpp"
 #include "circle.hpp"
 #include "rectangle.hpp"
+#include "color.hpp"
 #include <catch.hpp>
 
 

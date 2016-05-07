@@ -2,6 +2,7 @@
 #define RECTANGLE_HPP
 
 #include "position2.hpp"
+#include "color.hpp"
 
 /* // standardmaessig durch position2.hpp integriert
 struct Position
@@ -17,6 +18,7 @@ class Rectangle
 	public:
 		Rectangle();
 		Rectangle(float xPos, float yPos, float width_, float height_);
+		Rectangle(float xPos, float yPos, float width_, float height_, Color const& color_);
 
 		Position const& getPos() const;
 		Position getCenter() const;
@@ -33,6 +35,7 @@ class Rectangle
 		Position position;
 		float width;
 		float height;
+		Color color;
 };
 
 #endif
