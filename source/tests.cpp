@@ -1,6 +1,8 @@
 #define CATCH_CONFIG_RUNNER
 #include "vec2.hpp"
 #include "mat2.hpp"
+#include "circle.hpp"
+#include "rectangle.hpp"
 #include <catch.hpp>
 
 
@@ -440,6 +442,110 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 		REQUIRE(m2.matrix[0][1] == Approx(-1));
 		REQUIRE(m2.matrix[1][0] == Approx(1));
 		REQUIRE(m2.matrix[1][1] == Approx(0));
+	}
+}
+
+TEST_CASE("Circle-Test","[circle]")
+{
+	SECTION("Default-Constructor")
+	{
+		Circle circ;
+		REQUIRE(circ.getPos().x == 0);
+		REQUIRE(circ.getPos().y == 0);
+		REQUIRE(circ.getRadius() == 0.0);
+		REQUIRE(circ.getDiameter() == 0.0);
+		REQUIRE(circ.getBBox().x == 0);
+		REQUIRE(circ.getBBox().y == 0);
+		REQUIRE(circ.getBBox().width == 0.0);
+		REQUIRE(circ.getBBox().height == 0.0);
+	}
+
+	SECTION("User-Constructor")
+	{
+		Circle circ{5,10,6};
+		REQUIRE(circ.getPos().x == 5);
+		REQUIRE(circ.getPos().y == 10);
+		REQUIRE(circ.getRadius() == 6.0);
+		REQUIRE(circ.getDiameter() == 12.0);
+		REQUIRE(circ.getBBox().x == -1);
+		REQUIRE(circ.getBBox().y == 4);
+		REQUIRE(circ.getBBox().width == 12.0);
+		REQUIRE(circ.getBBox().height == 12.0);
+	}
+
+	SECTION("setPos-Test")
+	{
+		Circle circ;
+		circ.setPos(50,20);
+		REQUIRE(circ.getPos().x == 50);
+		REQUIRE(circ.getPos().y == 20);
+
+		circ.setPos(-50,-20.5);
+		REQUIRE(circ.getPos().x == -50);
+		REQUIRE(circ.getPos().y == -20.5);
+	}
+
+	SECTION("setRadius-Test")
+	{
+		Circle circ;
+		circ.setRadius(20);
+		REQUIRE(circ.getRadius() == 20);
+
+		circ.setRadius(-50.2);
+		REQUIRE(circ.getRadius() == Approx(50.2));
+	}
+}
+
+TEST_CASE("Rectangle-Test", "[rectangle]")
+{
+	SECTION("Default-Constructor")
+	{
+		Rectangle rect;
+		REQUIRE(rect.getPos().x == 0);
+		REQUIRE(rect.getPos().y == 0);
+		REQUIRE(rect.getWidth() == 0);
+		REQUIRE(rect.getHeight() == 0);
+		REQUIRE(rect.getDiagonal() == 0);
+		REQUIRE(rect.getCircumCircle() == 0);
+		REQUIRE(rect.getCenter().x == 0);
+		REQUIRE(rect.getCenter().y == 0);
+	}
+
+	SECTION("User-Constructor")
+	{
+		Rectangle rect{10,20,8,4};
+		REQUIRE(rect.getPos().x == 10);
+		REQUIRE(rect.getPos().y == 20);
+		REQUIRE(rect.getWidth() == 8);
+		REQUIRE(rect.getHeight() == 4);
+		REQUIRE(rect.getDiagonal() == Approx(8.94427));
+		REQUIRE(rect.getCircumCircle() == Approx(4.47214));
+		REQUIRE(rect.getCenter().x == 14);
+		REQUIRE(rect.getCenter().y == 22);
+	}
+
+	SECTION("setPos-Test")
+	{
+		Rectangle rect;
+		rect.setPos(10,15);
+		REQUIRE(rect.getPos().x == 10);
+		REQUIRE(rect.getPos().y == 15);
+
+		rect.setPos(-10,20.123);
+		REQUIRE(rect.getPos().x == -10);
+		REQUIRE(rect.getPos().y == Approx(20.123));
+	}
+
+	SECTION("setScale-Test")
+	{
+		Rectangle rect;
+		rect.setScale(20,40);
+		REQUIRE(rect.getWidth() == 20);
+		REQUIRE(rect.getHeight() == 40);
+
+		rect.setScale(-10,15.123);
+		REQUIRE(rect.getWidth() == 10);
+		REQUIRE(rect.getHeight() == Approx(15.123));
 	}
 }
 
