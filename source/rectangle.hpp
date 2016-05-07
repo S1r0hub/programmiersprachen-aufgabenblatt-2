@@ -32,7 +32,10 @@ class Rectangle
 		void setPos(float x, float y);
 		void setScale(float width_, float height_);
 
-		void draw(Window const& window, bool fill, bool outline) const;
+		void draw(Window const& window, bool fill) const;
+		void draw(Window const& window, Color const& color, bool fill) const;
+
+		bool is_inside(float PointX, float PointY) const;
 
 	private:
 		Position position;

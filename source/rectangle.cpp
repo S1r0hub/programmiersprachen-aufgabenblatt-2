@@ -68,7 +68,12 @@ void Rectangle::setScale(float width_, float height_) {
 
 // Functional ---------->
 
-void Rectangle::draw(Window const& window, bool fill, bool outline) const
+void Rectangle::draw(Window const& window, bool fill) const
+{
+	draw(window, color, fill);
+}
+
+void Rectangle::draw(Window const& window, Color const& color, bool fill) const
 {
 	if (fill) {
 		int lineCount = height*800;
@@ -78,15 +83,20 @@ void Rectangle::draw(Window const& window, bool fill, bool outline) const
 							 position.y + y,
 							 position.x + width,
 							 position.y + y,
-							 0.5f,0.5f,0.5f);
+							 color.r,color.g,color.b);
 		}
 	}
-
-	if (outline) {
-		Color c{0,0,0};
-		window.draw_line(position.x, position.y, position.x + width, position.y, c.r, c.g, c.b);
-		window.draw_line(position.x + width, position.y, position.x + width, position.y + height, c.r, c.g, c.b);
-		window.draw_line(position.x, position.y, position.x, position.y + height, c.r, c.g, c.b);
-		window.draw_line(position.x, position.y + height, position.x + width, position.y + height, c.r, c.g, c.b);
+	else
+	{
+		window.draw_line(position.x, position.y, position.x + width, position.y, color.r, color.g, color.b);
+		window.draw_line(position.x + width, position.y, position.x + width, position.y + height, color.r, color.g, color.b);
+		window.draw_line(position.x, position.y, position.x, position.y + height, color.r, color.g, color.b);
+		window.draw_line(position.x, position.y + height, position.x + width, position.y + height, color.r, color.g, color.b);
 	}
+}
+
+bool Rectangle::is_inside(float PointX, float PointY) const {
+	bool insideXRange = (PointX >= position.x && PointX <= position.x + width) ? true : false;
+	bool insideYRange = (PointY >= position.y && PointY <= position.y + height) ? true : false;
+	return ((insideXRange && insideYRange) ? true : false);
 }

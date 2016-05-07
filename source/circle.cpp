@@ -57,22 +57,26 @@ void Circle::setRadius(float radius_) {
 
 // Functional ---------->
 
-void Circle::draw(Window const& window, bool fill, bool outline) const
+void Circle::draw(Window const& window, bool fill) const
+{
+	draw(window, color, fill);
+}
+
+void Circle::draw(Window const& window, Color const& color, bool fill) const
 {
 	if (fill) {
-		int lineCount = 400;
+		int lineCount = 500;
 		for (int i = 1; i <= lineCount; ++i) {
 			float a = 2*M_PI*((float)i/(float)lineCount);
 			window.draw_line(position.x,
 							 position.y,
 							 position.x + (float)(radius * cos(a)),
 							 position.y + (float)(radius * sin(a)),
-							 0.1f,0.1f,0.1f);
+							 color.r,color.g,color.b);
 		}
 	}
-
-	if (outline) {
-		Color c{0,0,0};
+	else
+	{
 		int segments = 30;
 		for (int i = 1; i <= segments; ++i) {
 			float a = 2*M_PI*((float)i/(float)segments);
@@ -81,7 +85,14 @@ void Circle::draw(Window const& window, bool fill, bool outline) const
 							 position.y + (float)(radius * sin(a)),
 							 position.x + (float)(radius * cos(b)),
 							 position.y + (float)(radius * sin(b)),
-							 c.r,c.g,c.b);
+							 color.r,color.g,color.b);
 		}
 	}
+}
+
+bool Circle::is_inside(float PointX, float PointY) const {
+	float diffX = PointX - position.x;
+	float diffY = PointY - position.y;
+	float diffFromCenter = sqrt(pow(diffX,2) + pow(diffY,2));
+	return ((diffFromCenter <= radius) ? true : false);
 }

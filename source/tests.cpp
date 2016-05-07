@@ -448,7 +448,7 @@ TEST_CASE("2x2 Matrixtest","[mat2]")
 
 TEST_CASE("Circle-Test","[circle]")
 {
-	SECTION("Default-Constructor")
+	SECTION("Default-Constructor-Circ")
 	{
 		Circle circ;
 		REQUIRE(circ.getPos().x == 0);
@@ -461,7 +461,7 @@ TEST_CASE("Circle-Test","[circle]")
 		REQUIRE(circ.getBBox().height == 0.0);
 	}
 
-	SECTION("User-Constructor")
+	SECTION("User-Constructor-Circ")
 	{
 		Circle circ{5,10,6};
 		REQUIRE(circ.getPos().x == 5);
@@ -474,7 +474,7 @@ TEST_CASE("Circle-Test","[circle]")
 		REQUIRE(circ.getBBox().height == 12.0);
 	}
 
-	SECTION("setPos-Test")
+	SECTION("setPos-Test-Circ")
 	{
 		Circle circ;
 		circ.setPos(50,20);
@@ -486,7 +486,7 @@ TEST_CASE("Circle-Test","[circle]")
 		REQUIRE(circ.getPos().y == -20.5);
 	}
 
-	SECTION("setRadius-Test")
+	SECTION("setRadius-Test-Circ")
 	{
 		Circle circ;
 		circ.setRadius(20);
@@ -496,7 +496,7 @@ TEST_CASE("Circle-Test","[circle]")
 		REQUIRE(circ.getRadius() == Approx(50.2));
 	}
 
-	SECTION("circumference-Test")
+	SECTION("circumference-Test-Circ")
 	{
 		Circle circ{0,0,2};
 		REQUIRE(circ.circumference() == Approx(12.5664));
@@ -504,11 +504,28 @@ TEST_CASE("Circle-Test","[circle]")
 		circ = Circle{0,0,4.5};
 		REQUIRE(circ.circumference() == Approx(28.2743));
 	}
+
+	SECTION("is_inside-Test-Circ")
+	{
+		Circle circ{0,0,2};
+		// Kreis mit Radius = 2 -> rechte obere Ecke maximal sqrt(2) = 1.41421
+		float PointX = 1.45;
+		float PointY = 1.45;
+		REQUIRE(circ.is_inside(PointX,PointY) == false);
+		REQUIRE(circ.is_inside(-PointX,-PointY) == false);
+		REQUIRE(circ.is_inside(-PointX,PointY) == false);
+
+		PointX = 1;
+		PointY = 1;
+		REQUIRE(circ.is_inside(PointX,PointY) == true);
+		REQUIRE(circ.is_inside(-PointX,-PointY) == true);
+		REQUIRE(circ.is_inside(PointX,-PointY) == true);
+	}
 }
 
 TEST_CASE("Rectangle-Test", "[rectangle]")
 {
-	SECTION("Default-Constructor")
+	SECTION("Default-Constructor-Rect")
 	{
 		Rectangle rect;
 		REQUIRE(rect.getPos().x == 0);
@@ -521,7 +538,7 @@ TEST_CASE("Rectangle-Test", "[rectangle]")
 		REQUIRE(rect.getCenter().y == 0);
 	}
 
-	SECTION("User-Constructor")
+	SECTION("User-Constructor-Rect")
 	{
 		Rectangle rect{10,20,8,4};
 		REQUIRE(rect.getPos().x == 10);
@@ -534,7 +551,7 @@ TEST_CASE("Rectangle-Test", "[rectangle]")
 		REQUIRE(rect.getCenter().y == 22);
 	}
 
-	SECTION("setPos-Test")
+	SECTION("setPos-Test-Rect")
 	{
 		Rectangle rect;
 		rect.setPos(10,15);
@@ -546,7 +563,7 @@ TEST_CASE("Rectangle-Test", "[rectangle]")
 		REQUIRE(rect.getPos().y == Approx(20.123));
 	}
 
-	SECTION("setScale-Test")
+	SECTION("setScale-Test-Rect")
 	{
 		Rectangle rect;
 		rect.setScale(20,40);
@@ -558,13 +575,28 @@ TEST_CASE("Rectangle-Test", "[rectangle]")
 		REQUIRE(rect.getHeight() == Approx(15.123));
 	}
 
-	SECTION("circumference-Test")
+	SECTION("circumference-Test-Rect")
 	{
 		Rectangle rect{0,0,5,5};
 		REQUIRE(rect.circumference() == 20);
 
 		rect = Rectangle{0,0,2.5,10};
 		REQUIRE(rect.circumference() == 25);
+	}
+
+	SECTION("is_inside-Test-Rect")
+	{
+		Rectangle rect{1,1,5,2};
+
+		REQUIRE(rect.is_inside(3.1,3.1) == false);
+		REQUIRE(rect.is_inside(4,0.95) == false);
+		REQUIRE(rect.is_inside(6.1,2) == false);
+		REQUIRE(rect.is_inside(0.9,2) == false);
+
+		REQUIRE(rect.is_inside(1,2) == true);
+		REQUIRE(rect.is_inside(2,3) == true);
+		REQUIRE(rect.is_inside(6,2) == true);
+		REQUIRE(rect.is_inside(3.5,2) == true);
 	}
 }
 

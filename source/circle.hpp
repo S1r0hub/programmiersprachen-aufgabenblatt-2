@@ -39,7 +39,10 @@ class Circle
 		void setPos(float x, float y);
 		void setRadius(float radius_);
 
-		void draw(Window const& window, bool fill, bool outline) const;
+		void draw(Window const& window, bool fill) const;
+		void draw(Window const& window, Color const& color, bool fill) const;
+
+		bool is_inside(float PointX, float PointY) const;
 
 	private:
 		float radius;
