@@ -19,3 +19,12 @@ add_executable( tests
 				rectangle.cpp
 				tests.cpp )
 target_link_libraries(tests glfw ${GLFW_LIBRARIES})
+
+# Build analogUhr
+add_executable( analogUhr
+				window.cpp
+				glew.c
+				circle.cpp
+				rectangle.cpp
+				analoguhr.cpp )
+target_link_libraries(analogUhr glfw ${GLFW_LIBRARIES})

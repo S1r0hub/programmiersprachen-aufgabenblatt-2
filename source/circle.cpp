@@ -77,7 +77,7 @@ void Circle::draw(Window const& window, Color const& color, bool fill) const
 	}
 	else
 	{
-		int segments = 30;
+		int segments = 50;
 		for (int i = 1; i <= segments; ++i) {
 			float a = 2*M_PI*((float)i/(float)segments);
 			float b = 2*M_PI*((float)(i+1)/(float)segments);
